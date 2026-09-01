@@ -27,9 +27,20 @@ include/bpf/bpf_helpers.h:
 	@for h in $(HDRS); do curl -sSL -o include/bpf/$$h $(LIBBPF_RAW)/$$h; done
 	@echo "vendored libbpf $(LIBBPF_VER) headers -> include/bpf"
 
+# Ubuntu's /usr/sbin/bpftool is a wrapper that only works when a matching
+# linux-tools-$(uname -r) package exists. Fall back to any versioned binary --
+# BTF dumping reads /sys/kernel/btf/vmlinux at runtime and is not tied to the
+# bpftool build's own kernel version.
 $(BUILD)/vmlinux.h:
 	@mkdir -p $(BUILD)
-	bpftool btf dump file /sys/kernel/btf/vmlinux format c > $@
+	@for bt in bpftool $$(ls /usr/lib/linux-tools/*/bpftool 2>/dev/null); do \
+		if $$bt btf dump file /sys/kernel/btf/vmlinux format c > $@.tmp 2>/dev/null && [ -s $@.tmp ]; then \
+			mv $@.tmp $@; echo "vmlinux.h: $$(wc -l < $@) lines (via $$bt)"; exit 0; \
+		fi; \
+	done; \
+	rm -f $@.tmp; \
+	echo "ERROR: no working bpftool could dump BTF. Try: apt install linux-tools-$$(uname -r)"; \
+	exit 1
 
 $(BUILD)/%.bpf.o: bpf/%.bpf.c | $(BUILD)/vmlinux.h
 	clang $(CLANG_FLAGS) -c $< -o $@
