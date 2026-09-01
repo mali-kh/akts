@@ -18,7 +18,7 @@ CLANG_FLAGS := -target bpf -D__TARGET_ARCH_$(ARCH) -O2 -g \
                -I include -I $(BUILD)
 
 .PHONY: all setup clean
-all: setup $(BPF_OBJS) $(BUILD)/bench_swap
+all: setup $(BPF_OBJS) $(BUILD)/bench_swap $(BUILD)/gate3_loader
 
 setup: include/bpf/bpf_helpers.h $(BUILD)/vmlinux.h
 
@@ -48,6 +48,11 @@ $(BUILD)/%.bpf.o: bpf/%.bpf.c | $(BUILD)/vmlinux.h
 $(BUILD)/bench_swap: bench/bench_swap.c
 	@mkdir -p $(BUILD)
 	gcc -O2 -o $@ $<
+
+# gate 3 loader needs libbpf proper (userspace), unlike the rest of the tree
+$(BUILD)/gate3_loader: src/gate3_loader.c
+	@mkdir -p $(BUILD)
+	gcc -O2 -o $@ $< -lbpf -lpthread
 
 clean:
 	rm -rf $(BUILD)

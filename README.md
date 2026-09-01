@@ -31,8 +31,7 @@ Two properties follow:
 
 ## Status
 
-Two of the three structural assumptions have been validated on real hardware; the
-third is open. Results reproduce on two platforms that differ in kernel version,
+All three structural assumptions have been validated on real hardware. Results reproduce on two platforms that differ in kernel version,
 CPU vendor and virtualisation — see
 [`results/2026-08-31-anrg-4.md`](results/2026-08-31-anrg-4.md) (Linux 7.0, Intel,
 bare metal) and
@@ -43,7 +42,7 @@ bare metal) and
 |---|---|---|
 | Gate 1 | Does `bpf_tail_call` verify inside a sched_ext `struct_ops` program? | **yes** |
 | Gate 2 | Can a sched_ext program be inserted into a `PROG_ARRAY`? | **yes** |
-| Gate 3 | Does the tail call dispatch at runtime through a struct_ops trampoline? | open |
+| Gate 3 | Does the tail call dispatch at runtime through a struct_ops trampoline? | **yes** (766/766, via `tcp_congestion_ops`) |
 
 Measured actuation cost is at parity with a `/proc/sys` write, and orders of
 magnitude below a recompile-and-reload path. The ratio replicates across both
