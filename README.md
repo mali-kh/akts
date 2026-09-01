@@ -1,17 +1,17 @@
-# AKTS — Agentic Kernel Tail-Call Stitching
+# AKTS: Agentic Kernel Tail-Call Stitching
 
 Sub-microsecond kernel policy switching driven by a language-model agent, without
 letting the agent write kernel code.
 
 ## Idea
 
-An LLM cannot sit in a kernel scheduling path: inference takes 10–1000 ms, while
-scheduling decisions happen every 1–10 us. Existing approaches resolve this in one
+An LLM cannot sit in a kernel scheduling path: inference takes 10-1000 ms, while
+scheduling decisions happen every 1-10 us. Existing approaches resolve this in one
 of two ways, each with a cost:
 
-- **Knob tuning** — the agent writes a scalar to `/proc/sys`. Fast to apply, but
+- **Knob tuning**, the agent writes a scalar to `/proc/sys`. Fast to apply, but
   it can only adjust dials the kernel already exposes; it cannot change an algorithm.
-- **Code generation** — the agent writes eBPF C, which is then compiled, verified
+- **Code generation**, the agent writes eBPF C, which is then compiled, verified
   and loaded. Fully expressive, but that path costs seconds to a minute, and
   generated code can fail the verifier.
 
@@ -31,23 +31,17 @@ Two properties follow:
 
 ## Status
 
-All three structural assumptions have been validated on real hardware. Results reproduce on two platforms that differ in kernel version,
-CPU vendor and virtualisation — see
-[`results/2026-08-31-anrg-4.md`](results/2026-08-31-anrg-4.md) (Linux 7.0, Intel,
-bare metal) and
-[`results/2026-09-01-lambda-a100.md`](results/2026-09-01-lambda-a100.md)
-(Linux 6.14, AMD EPYC, KVM, A100).
+All three structural assumptions have been validated on real hardware
+(Linux 6.14, AMD EPYC, A100). See [`results/`](results/).
 
 | | Question | Status |
 |---|---|---|
 | Gate 1 | Does `bpf_tail_call` verify inside a sched_ext `struct_ops` program? | **yes** |
 | Gate 2 | Can a sched_ext program be inserted into a `PROG_ARRAY`? | **yes** |
-| Gate 3 | Does the tail call dispatch at runtime? | **yes** — 64,160/64,160 on an attached `sched_ext` scheduler |
+| Gate 3 | Does the tail call dispatch at runtime? | **yes**, 64,160/64,160 on an attached `sched_ext` scheduler |
 
-Measured actuation cost is at parity with a `/proc/sys` write, and orders of
-magnitude below a recompile-and-reload path. The ratio replicates across both
-platforms: 447/533 ns = 0.84 on Intel bare metal, 920/1110 ns = 0.83 on AMD
-under KVM.
+Measured actuation cost is 920 ns (p50, n=200k), at parity with a `/proc/sys`
+write at 1110 ns, and orders of magnitude below a recompile-and-reload path.
 
 ## Build
 
