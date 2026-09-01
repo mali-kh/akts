@@ -18,7 +18,8 @@ CLANG_FLAGS := -target bpf -D__TARGET_ARCH_$(ARCH) -O2 -g \
                -I include -I $(BUILD)
 
 .PHONY: all setup clean
-all: setup $(BPF_OBJS) $(BUILD)/bench_swap $(BUILD)/gate3_loader
+all: setup $(BPF_OBJS) $(BUILD)/bench_swap $(BUILD)/gate3_loader \
+     $(BUILD)/gate3_sched_loader $(BUILD)/akts_b2_loader $(BUILD)/runext $(BUILD)/hog
 
 setup: include/bpf/bpf_helpers.h $(BUILD)/vmlinux.h
 
@@ -53,6 +54,22 @@ $(BUILD)/bench_swap: bench/bench_swap.c
 $(BUILD)/gate3_loader: src/gate3_loader.c
 	@mkdir -p $(BUILD)
 	gcc -O2 -o $@ $< -lbpf -lpthread
+
+$(BUILD)/gate3_sched_loader: src/gate3_sched_loader.c
+	@mkdir -p $(BUILD)
+	gcc -O2 -o $@ $< -lbpf
+
+$(BUILD)/akts_b2_loader: src/akts_b2_loader.c
+	@mkdir -p $(BUILD)
+	gcc -O2 -o $@ $< -lbpf
+
+$(BUILD)/runext: src/runext.c
+	@mkdir -p $(BUILD)
+	gcc -O2 -o $@ $<
+
+$(BUILD)/hog: bench/hog.c
+	@mkdir -p $(BUILD)
+	gcc -O2 -o $@ $<
 
 clean:
 	rm -rf $(BUILD)
