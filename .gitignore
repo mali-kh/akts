@@ -2,3 +2,7 @@ build/
 include/
 *.o
 vmlinux.h
+
+# never commit private keys
+*.pem
+id_*
