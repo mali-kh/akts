@@ -8,13 +8,14 @@
 # Baseline B (SchedCP-style recompile+reload) is not measured here; it is the
 # compile/verify/load path, seconds to a minute, and is not a syscall race.
 set -u
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"; B="$ROOT/build"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+. "$(dirname "$0")/common.sh"; B="$ROOT/build"
 echo "kernel: $(uname -r)"; echo "cpu: $(lscpu | sed -n 's/^Model name: *//p')"
 echo "sched_ext BEFORE: $(cat /sys/kernel/sched_ext/state)"
 rm -rf /sys/fs/bpf/akts; mkdir -p /sys/fs/bpf/akts
-bpftool prog loadall "$B/akts_dispatch.bpf.o" /sys/fs/bpf/akts pinmaps /sys/fs/bpf/akts 2>/dev/null \
+"$BPFTOOL" prog loadall "$B/akts_dispatch.bpf.o" /sys/fs/bpf/akts pinmaps /sys/fs/bpf/akts 2>/dev/null \
   || { echo "load failed"; exit 1; }
-bpftool map update pinned /sys/fs/bpf/akts/jmp_table \
+"$BPFTOOL" map update pinned /sys/fs/bpf/akts/jmp_table \
   key 0 0 0 0 value pinned /sys/fs/bpf/akts/akts_policy_lat 2>/dev/null && echo "prog_array populated"
 
 echo; echo "=== ACTUATION LATENCY (nothing attached) ==="

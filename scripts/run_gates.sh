@@ -4,16 +4,17 @@
 # LOAD ONLY. Nothing here attaches a scheduler, so a machine running other
 # workloads is unaffected. sched_ext state is asserted unchanged at the end.
 set -u
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"; B="$ROOT/build"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+. "$(dirname "$0")/common.sh"; B="$ROOT/build"
 echo "kernel: $(uname -r)"
 echo "sched_ext BEFORE: $(cat /sys/kernel/sched_ext/state)"
 
 try() {
   echo; echo "=== $1 ==="
   rm -f /sys/fs/bpf/akts_test
-  if bpftool prog load "$B/$2" /sys/fs/bpf/akts_test 2>/tmp/akts_err; then
+  if "$BPFTOOL" prog load "$B/$2" /sys/fs/bpf/akts_test 2>/tmp/akts_err; then
     echo "LOAD SUCCEEDED (verifier accepted)"
-    bpftool prog show pinned /sys/fs/bpf/akts_test | head -2
+    "$BPFTOOL" prog show pinned /sys/fs/bpf/akts_test | head -2
   else
     echo "LOAD FAILED"; tail -40 /tmp/akts_err
   fi
