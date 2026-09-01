@@ -1,0 +1,25 @@
+# Environment snapshot, Lambda A100 instance, Tue Sep  1 11:25:40 UTC 2026
+
+Linux 129-146-119-73 6.14.0-27-generic #27~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jul 22 17:38:49 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+NVIDIA A100-SXM4-40GB, 40960 MiB, 580.173.02
+PRETTY_NAME="Ubuntu 24.04.2 LTS"
+vllm: Version: 0.28.0
+
+## key packages
+aiohttp==3.14.3
+flashinfer-python==0.6.16.post3
+torch==2.13.0
+torch_c_dlpack_ext==0.1.5
+torchaudio==2.11.0
+torchcodec==0.16.0
+torchvision==0.28.0
+transformers==5.16.1
+vllm==0.28.0
+
+## kernel packages
+linux-image-6.14.0-27-generic 6.14.0-27.27~24.04.1
+linux-image-6.8.0-138-generic 6.8.0-138.138
+linux-image-6.8.0-62-generic 6.8.0-62.65
+linux-image-virtual 6.8.0-138.138
+nvidia-driver-580-server 580.173.02-0ubuntu0.24.04.1

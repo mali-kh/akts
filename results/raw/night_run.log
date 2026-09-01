@@ -1,0 +1,25 @@
+[10:39:46] === repetition 1 ===
+[10:41:24] === repetition 2 ===
+[10:43:02] === repetition 3 ===
+[10:44:40] === repetition 4 ===
+[10:46:19] === repetition 5 ===
+[10:47:57] === repetition 6 ===
+[10:49:35] === repetition 7 ===
+[10:51:14] aggregating
+metric                              static_latency         static_throughput            akts_switching
+burst.p50                          225.8 ± 9.5               358.0 ± 4.0               229.0 ± 4.6    
+burst.p99                          393.7 ± 43.0              411.4 ± 17.0              371.4 ± 28.0   
+burst.n                           1132.3 ± 33.9              738.1 ± 12.9             1128.6 ± 25.6   
+steady_pre.p50                      84.6 ± 3.1               284.5 ± 1.5               284.4 ± 1.4    
+steady_post.p50                     83.2 ± 3.1               285.4 ± 1.2               285.0 ± 2.4    
+work_Mit                           1.789 ± 0.006             1.966 ± 0.018             1.912 ± 0.007  
+repetitions: [7, 7, 7]
+[10:51:14] === model sweep ===
+[10:51:14] starting Qwen/Qwen2.5-0.5B-Instruct
+[10:52:07] done Qwen/Qwen2.5-0.5B-Instruct
+[10:52:07] starting Qwen/Qwen2.5-1.5B-Instruct
+[10:53:37] done Qwen/Qwen2.5-1.5B-Instruct
+[10:53:37] starting Qwen/Qwen2.5-3B-Instruct
+[10:55:22] done Qwen/Qwen2.5-3B-Instruct
+[10:55:22] restoring 0.5B server
+[10:56:20] ALL DONE

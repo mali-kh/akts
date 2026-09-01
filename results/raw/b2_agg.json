@@ -1,0 +1,131 @@
+{
+  "static_latency": {
+    "reps": 7,
+    "steady_pre.p50": [
+      84.6,
+      3.1
+    ],
+    "steady_pre.p99": [
+      177.1,
+      11.8
+    ],
+    "steady_pre.n": [
+      177.9,
+      7.8
+    ],
+    "burst.p50": [
+      225.8,
+      9.5
+    ],
+    "burst.p99": [
+      393.7,
+      43.0
+    ],
+    "burst.n": [
+      1132.3,
+      33.9
+    ],
+    "steady_post.p50": [
+      83.2,
+      3.1
+    ],
+    "steady_post.p99": [
+      183.2,
+      19.7
+    ],
+    "steady_post.n": [
+      179.6,
+      5.1
+    ],
+    "work_Mit": [
+      1.789,
+      0.006
+    ]
+  },
+  "static_throughput": {
+    "reps": 7,
+    "steady_pre.p50": [
+      284.5,
+      1.5
+    ],
+    "steady_pre.p99": [
+      342.5,
+      34.3
+    ],
+    "steady_pre.n": [
+      56.3,
+      1.4
+    ],
+    "burst.p50": [
+      358.0,
+      4.0
+    ],
+    "burst.p99": [
+      411.4,
+      17.0
+    ],
+    "burst.n": [
+      738.1,
+      12.9
+    ],
+    "steady_post.p50": [
+      285.4,
+      1.2
+    ],
+    "steady_post.p99": [
+      342.9,
+      17.4
+    ],
+    "steady_post.n": [
+      56.0,
+      0.0
+    ],
+    "work_Mit": [
+      1.966,
+      0.018
+    ]
+  },
+  "akts_switching": {
+    "reps": 7,
+    "steady_pre.p50": [
+      284.4,
+      1.4
+    ],
+    "steady_pre.p99": [
+      328.1,
+      20.7
+    ],
+    "steady_pre.n": [
+      57.1,
+      1.1
+    ],
+    "burst.p50": [
+      229.0,
+      4.6
+    ],
+    "burst.p99": [
+      371.4,
+      28.0
+    ],
+    "burst.n": [
+      1128.6,
+      25.6
+    ],
+    "steady_post.p50": [
+      285.0,
+      2.4
+    ],
+    "steady_post.p99": [
+      331.5,
+      6.9
+    ],
+    "steady_post.n": [
+      56.3,
+      0.8
+    ],
+    "work_Mit": [
+      1.912,
+      0.007
+    ]
+  }
+}
