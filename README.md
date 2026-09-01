@@ -42,7 +42,7 @@ bare metal) and
 |---|---|---|
 | Gate 1 | Does `bpf_tail_call` verify inside a sched_ext `struct_ops` program? | **yes** |
 | Gate 2 | Can a sched_ext program be inserted into a `PROG_ARRAY`? | **yes** |
-| Gate 3 | Does the tail call dispatch at runtime through a struct_ops trampoline? | **yes** (766/766, via `tcp_congestion_ops`) |
+| Gate 3 | Does the tail call dispatch at runtime? | **yes** — 64,160/64,160 on an attached `sched_ext` scheduler |
 
 Measured actuation cost is at parity with a `/proc/sys` write, and orders of
 magnitude below a recompile-and-reload path. The ratio replicates across both
