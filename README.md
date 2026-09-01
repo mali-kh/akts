@@ -32,7 +32,12 @@ Two properties follow:
 ## Status
 
 Two of the three structural assumptions have been validated on real hardware; the
-third is open. See [`results/2026-08-31-anrg-4.md`](results/2026-08-31-anrg-4.md).
+third is open. Results reproduce on two platforms that differ in kernel version,
+CPU vendor and virtualisation — see
+[`results/2026-08-31-anrg-4.md`](results/2026-08-31-anrg-4.md) (Linux 7.0, Intel,
+bare metal) and
+[`results/2026-09-01-lambda-a100.md`](results/2026-09-01-lambda-a100.md)
+(Linux 6.14, AMD EPYC, KVM, A100).
 
 | | Question | Status |
 |---|---|---|
@@ -40,8 +45,10 @@ third is open. See [`results/2026-08-31-anrg-4.md`](results/2026-08-31-anrg-4.md
 | Gate 2 | Can a sched_ext program be inserted into a `PROG_ARRAY`? | **yes** |
 | Gate 3 | Does the tail call dispatch at runtime through a struct_ops trampoline? | open |
 
-Measured actuation cost is **447 ns** (p50, n=200k) — at parity with a `/proc/sys`
-write at 533 ns, and orders of magnitude below a recompile-and-reload path.
+Measured actuation cost is at parity with a `/proc/sys` write, and orders of
+magnitude below a recompile-and-reload path. The ratio replicates across both
+platforms: 447/533 ns = 0.84 on Intel bare metal, 920/1110 ns = 0.83 on AMD
+under KVM.
 
 ## Build
 
